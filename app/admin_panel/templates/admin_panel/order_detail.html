@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Заказ №{{ order.pk }}</h1>
+
+<p><strong>Покупатель:</strong> {{ order.user.first_name }} {{ order.user.last_name }}</p>
+<p><strong>Телефон:</strong> {{ order.phone_number }}</p>
+<p><strong>Дата создания:</strong> {{ order.created_timestamp }}</p>
+<p><strong>Статус:</strong> {{ order.status }}</p>
+<p><strong>Оплачено:</strong> {{ order.is_paid }}</p>
+<p><strong>Требуется доставка:</strong> {{ order.requires_delivery }}</p>
+{% if order.requires_delivery %}
+<p><strong>Адрес доставки:</strong> {{ order.delivery_address }}</p>
+{% endif %}
+
+<h4>Товары в заказе:</h4>
+<ul>
+    {% for item in order_items %}
+        <li>
+            {{ item.product.name }} ({{ item.quantity }}) — {{ item.price }} ₽
+            <a href="{% url 'admin_panel:order_item_edit' order.pk item.pk %}" class="btn btn-warning">Редактировать</a>
+            <a href="{% url 'admin_panel:order_item_delete' order.pk item.pk %}" class="btn btn-danger">Удалить</a>
+        </li>
+    {% empty %}
+        <li>Нет товаров в заказе.</li>
+    {% endfor %}
+</ul>
+<!--<p><strong>Общая сумма:</strong> {{ order.order_item.quantity }}</p>-->
+<a href="{% url 'admin_panel:order_item_create' order.pk %}" class="btn btn-success">Добавить товар</a>
+<a href="{% url 'admin_panel:order_edit' order.pk %}" class="btn btn-warning">Редактировать заказ</a>
+<a href="{% url 'admin_panel:order_delete' order.pk %}" class="btn btn-danger">Удалить заказ</a>
+<a href="{% url 'admin_panel:orders_list' %}" class="btn btn-secondary">Назад к списку заказов</a>
+{% endblock %}

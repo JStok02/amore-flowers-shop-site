@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+        <div class="login">
+            <div class="login-form">
+                <h2 class="mb-3">Войти</h2>
+                <div class="login-text"><p class="login-btn-register mb-3">Если у вас еще нет личного кабинета, нажмите <a href="{% url "user:registration" %}">sign up</a>, чтобы зарегистрироваться</p></div>
+
+                <form  action="{% url "user:login" %}" method="post">
+                    {% csrf_token %}
+                    {% if request.GET.next %}
+                        <input type="hidden" name="next" value={{request.GET.next}}>
+                    {% endif %}
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Имя пользователя</label>
+                        <input type="text" class="form-control"
+                        value="{% if form.username.value %}{{ form.username.value }}{% endif %}"
+                        name="username" id="id_username"
+                        placeholder="введите ваше имя пользователя"
+                        required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_password" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" name="password" id="id_password"
+                        placeholder="введите пароль (не менее 8 символов)" required>
+                    </div>
+
+
+                    {% comment %} {% for item in form %}
+                    <div class="mb-3">
+                        <label for="{{ item.id_for_label }}" class="form-label">{{ item.label }}</label>
+                        {{item}}
+                    </div>
+                    {% endfor %} {% endcomment %}
+
+
+                    {% comment %} <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">Имя пользователя</label>
+                        {{form.username}}
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Пароль</label>
+                        {{ form.password }}
+                    </div> {% endcomment %}
+
+                    
+                    {% comment %} <div class="mb-3">
+                        <label for="username" class="form-label">Имя пользователя</label>
+                        <input type="text" class="form-control" id="username" placeholder="введите ваше имя пользователя" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" id="password" placeholder="введите пароль (не менее 8 символов)" required>
+                    </div> {%endcomment%}
+
+
+                    <div class="login-bottom d-flex align-items-center gap-3">
+    <!--                    <a href="#" class="btn-pink">Забыли пароль?</a>-->
+                        <button type="submit" class="btn-pink">Войти</button>
+                        <div class="login-btn-register">Зарегистрироваться <a href="{% url "user:registration" %}">sign up</a></div>
+                    </div>
+                </form>
+            </div>
+            <div class="login-right">
+                <img src="{% static "deps/images/login-img.jpg" %}" alt="">
+            </div>
+        </div>
+{% endblock  %}

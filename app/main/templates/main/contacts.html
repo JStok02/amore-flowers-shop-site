@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="contacts">
+        <div class="contacts-left">
+            <h2 class="contacts-title">{{ content|safe }}</h2>
+            <ul class="additional-benefits">
+                {% for benefit in additional_benefits %}
+                    <li>{{ benefit }}</li>
+                {% endfor %}
+                <li class="footer-contacts-social">
+                    <a href="tel:+79962771999">+7 996 277 1999</a>
+                </li>
+                <li class="footer-contacts-social">
+                    <a href="https://t.me/amoreflowersamore">telegram</a>
+                    <img src="{% static "deps/icons/telegram.svg" %}" alt="">
+                </li>
+                <li class="footer-contacts-social">
+                    <a href="https://wa.me/79962771999">whatsapp</a>
+                    <img src="{% static "deps/icons/whatsapp.svg" %}" alt="">
+                </li>
+            </ul>
+        </div>
+        <div class="contacts-right">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d216.97011987540873!2d113.49934277237185!3d52.02989439277979!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5dca3534697cee1d%3A0x2c350b812a4d0359!2z0YPQuy4g0JDQvNGD0YDRgdC60LDRjywgODIsINCn0LjRgtCwLCDQl9Cw0LHQsNC50LrQsNC70YzRgdC60LjQuSDQutGA0LDQuSwgNjcyMDAw!5e0!3m2!1sru!2sru!4v1763963958841!5m2!1sru!2sru" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+{% endblock %}
+
+

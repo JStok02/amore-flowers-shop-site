@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="about">
+        <div class="about-left">
+            <h2 class="about-title">{{ content|safe }}</h2>
+            {% for block in text_on_page %}
+            <div class="about-text-block">
+                <p>{{ block.text }}</p>
+            </div>
+            {% endfor %}
+
+            <ul class="additional-benefits">
+                {% for benefit in additional_benefits %}
+                    <li>{{ benefit }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="about-right">
+            <img src="{% static 'deps/images/about-img.jpg' %}" alt="Flower shop">
+        </div>
+    </div>
+{% endblock %}
+
+

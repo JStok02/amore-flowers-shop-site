@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <main class="main">
+        <section class="main-hero">
+            <div class="hero-left">
+                <div class="hero-title">Amore <h2>{{ content|safe }}</h2></div>
+                <div class="main-description">
+                    <p>Добро пожаловать в наш волшебный цветочный магазин, где каждая композиция — это символ любви и нежности, а каждый цветок словно расцветает в объятиях романтики. Окунитесь в мир ярких чувств, трепетных ароматов и красоты, которая наполняет сердце теплом и вдохновением.</p>
+                    <a href="{% url 'catalog:index' 'all' %}" class="btn-pink">Наш каталог<img src="{% static "deps/icons/btn-arrow.svg" %}" alt="Arrow"></a>
+                </div>
+            </div>
+            <div class="hero-right"><img src="{% static "deps/images/main-hero-img.jpg" %}" alt="Flower shop"></div>
+        </section>
+
+        <section class="main-popular">
+            <div class="popular-left">
+                <div class="popular-card">
+                    <img src="{% static "deps/images/popular-product-card-1.jpg" %}" alt="Boucet">
+                    <div class="card-info">
+                        <p class="card-title">Классика и нежность</p>
+                        <p class="card-price">3350</p>
+                    </div>
+                </div>
+                <div class="main-description">
+                    <p>В нашем магазине мы гордимся тем, что предлагаем потрясающий выбор самых популярных цветов, которые покоряют сердца и дарят радость. Откройте для себя наш цветочный рай и непроходящую красоту этих любимых цветов.</p>
+                    <a href="{% url 'catalog:index' 'bouquets' %}" class="btn-pink">Весь каталог<img src="{% static "deps/icons/btn-arrow.svg" %}" alt="Arrow"></a>
+                </div>
+            </div>
+            <div class="popular-right">
+                <h2>Наши самые популярные букеты</h2>
+                <div class="popular-cards">
+                    <div class="popular-card">
+                        <img src="{% static "deps/images/popular-product-card-2.jpg" %}" alt="Boucet">
+                        <div class="card-info">
+                            <p class="card-title">Романтика в цвете</p>
+                            <p class="card-price">3250</p>
+                        </div>
+                    </div>
+
+                    <div class="popular-card">
+                        <img src="{% static "deps/images/popular-product-card-3.jpg" %}" alt="Boucet">
+                        <div class="card-info">
+                            <p class="card-title">Очарование роз</p>
+                            <p class="card-price">2600</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="main-discount">
+            <div class="discount-left">
+                <h2>10% скидка про заказе от 15 штук</h2>
+                <img src="{% static "deps/images/discount-product-1.png" %}" alt="Boucet">
+            </div>
+            <div class="discount-right">
+                <img src="{% static "deps/images/discount-product-2.jpg" %}" alt="Boucet">
+                <div class="discount-description">
+                    <p>В нашем магазине мы верим в радость новых начинаний. Поэтому мы рады предложить эксклюзивное предложение для тех, кто делает крупный заказ. Получите скидку 10% при покупке от 15 штук! Насладитесь выбором из нашего широкого ассортимента высококачественных товаров, отобранных и изготовленных с особой тщательностью.</p>
+                    <a href="{% url 'catalog:index' 'bouquets' %}" class="btn-pink">Заказать<img src="{% static "deps/icons/btn-arrow.svg" %}" alt="Arrow"></a>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

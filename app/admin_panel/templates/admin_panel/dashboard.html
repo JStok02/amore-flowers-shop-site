@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Административная панель</h2>
+<ul>
+    <li><a href="{% url 'admin_panel:users_list' %}">Пользователи</a></li>
+    <li><a href="{% url 'admin_panel:categories_list' %}">Категории</a></li>
+    <li><a href="{% url 'admin_panel:products_list' %}">Продукты</a></li>
+    <li><a href="{% url 'admin_panel:orders_list' %}">Заказы</a></li>
+</ul>
+{% endblock %}

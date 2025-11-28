@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--    <h1>Удалить пользователя "{{ object.username }}"?</h1>-->
+<!--    <form method="post">-->
+<!--        {% csrf_token %}-->
+<!--        <button type="submit">Да, удалить</button>-->
+<!--        <a href="{% url 'admin_panel:users_list' %}">Отмена</a>-->
+<!--    </form>-->
+    <h1>Вы уверены, что хотите удалить пользователя {{ user.first_name }} {{ user.last_name }}?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+    </form>
+    <a href="{% url 'admin_panel:users_list' %}">Отмена</a>
+
+{% endblock %}

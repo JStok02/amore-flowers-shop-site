@@ -1,0 +1,150 @@
+{% load static %}
+{% load cache %}
+{% load goods_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "deps/css/bootstrap/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "deps/css/my_css.css" %}">
+    <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+    {% block css %}
+    {% endblock %}
+    <!-- Favicons for different platforms -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static "deps/favicon/apple-touch-icon.png" %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static "deps/favicon/favicon-32x32.png" %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "deps/favicon/favicon-16x16.png" %}">
+    <link rel="manifest" href="{% static "deps/favicon/site.webmanifest" %}">
+
+    <!--  Google font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+
+    <title>{{ title }}</title>
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-logo" href="{% url "main:index" %}"><img class="object-fit-contain" src="{% static "deps/favicon/logo.png" %}" alt="Logo"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">Каталог</a>
+                            <ul class="dropdown-menu">
+                                {% cache 60 catalog_categories %}
+                                {% tag_categories as categories %}
+                                {% for category in categories %}
+                                    <li><a class="dropdown-item" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
+                                {% endfor %}
+                                {% endcache %}
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url "main:about" %}">О нас</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url "main:contacts" %}">Контакты</a></li>
+                    </ul>
+
+                    <ul class="navbar-nav mb-2 align-items-center gap-2">
+                        <li class="nav-item">
+                            <form class="d-flex align-items-center" role="search" action="{% url "catalog:search" %}" method="get">
+                                <input class="form-control me-2" type="search" name="q" placeholder="Напишите слово" aria-label="Search">
+                                <a class="btn-outline-success nav-loupe" type="submit"></a>
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-shop nav-link" href="{% url "user:users_cart" %}"><span id="goods-in-cart-count">{{ carts.total_quantity }}</span></a>
+                        </li>
+                        {% if not user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url "user:login" %}">Войти</a>
+                            </li>
+                        {% else %}
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle nav-user" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            </a>
+                            <ul class="dropdown-menu header-dropdown-profile">
+                                <li><a class="dropdown-item" href="{% url "user:profile" %}">Профиль</a>
+                                </li>
+                                {% if user.is_superuser or user.is_staff %}
+                                    <li><a class="dropdown-item" href="{% url "admin_panel:dashboard" %}">Админ панель</a></li>
+                                {% endif %}
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="{% url "user:logout" %}">Выйти</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section>
+        <div class="container">
+            <!-- Каталог и корзина с фиксированным расположением на странице -->
+            <div class="row mt-1 position-fixed z-3">
+                <!-- Значек корзины, вызывает модальное окно -->
+                {% block modal_cart %}{% endblock  %}
+                <!-- Закончилась разметка модального окна -->
+            </div>
+        </div>
+        <!-- Контент -->
+        <div class="container">
+            <div class="row">
+                    {% include "includes/notifications.html" %}
+                    {% block content %}{% endblock %}
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-4 footer">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap">
+            <div class="footer-logo"><img class="object-fit-contain" src="{% static "deps/favicon/logo.png" %}" alt="Logo"></div>
+            <div class="footer-info d-flex flex-wrap">
+                <div class="footer-contacts">
+                    <h4>Контакты</h4>
+                    <a href="tel:+79962771999">+7 996 277 1999</a>
+                    <div class="footer-contacts-social">
+                        <a href="https://t.me/amoreflowersamore">telegram</a>
+                        <img src="{% static "deps/icons/telegram.svg" %}" alt="">
+                    </div>
+                    <div class="footer-contacts-social">
+                        <a href="https://wa.me/79962771999">whatsapp</a>
+                        <img src="{% static "deps/icons/whatsapp.svg" %}" alt="">
+                    </div>
+                </div>
+                <div class="footer-nav">
+                    <h4>Навигация</h4>
+                    <a href="{% url 'catalog:index' 'all' %}">Каталог</a>
+                    <a href="{% url "main:about" %}">О нас</a>
+                    <a href="{% url "main:contacts" %}">Контакты</a>
+                </div>
+                <div class="footer-address">
+                    <h4>Адрес и часы работы</h4>
+                    <p>Улица Амурская, 82</p>
+                    <p>пн-пт 09:00 - 19:00</p>
+                    <p>сб-вс 10:00 - 19:00</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static "deps/js/jquery/jquery-3.7.0.min.js" %}"></script>
+    <script src="{% static "deps/js/jquery-ajax.js" %}"></script>
+    <script src="{% static "deps/js/bootstrap/bootstrap.bundle.min.js" %}"></script>
+</body>
+</html>
