@@ -188,6 +188,10 @@ a.btn-pink img {
   background-size: contain;
   width: 18px;
   height: 19px;
+
+  outline: none;
+  border: none;
+  background-color: transparent;
 }
 .dropdown-toggle::after {
   content: none;

@@ -58,48 +58,38 @@
     {% for product in goods %}
             <!-- Карта товара -->
             <div class="catalog-card">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" class="catalog-card-img custom-shadow" alt="{{ product.name }}">
-                {% else %}
-                    <img src="{% static "deps/images/Not found image.png" %}" class="catalog-card-img custom-shadow" alt="...">
-                {% endif %}
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                    <a href="{% url "catalog:product" product.slug %}">
-                        <p class="card-title">
-                            {% autoescape off %}
-                                {% if product.headline %}
-                                {{product.headline}}
-                                {% else %}
-                                {{ product.name }}
-                                {% endif %}
-                            {% endautoescape %}
-                        </p>
-                    </a>
-    <!--                <p class="card-text">-->
-    <!--                    {% autoescape off %}-->
-    <!--                        {% if product.bodyline %}-->
-    <!--                        {{product.bodyline|truncatechars:100}}-->
-    <!--                        {% else %}-->
-    <!--                        {{ product.description|truncatechars:35 }}-->
-    <!--                        {% endif %}-->
-    <!--                    {% endautoescape %}-->
-    <!--                </p>-->
-                    <div class="d-flex justify-content-between align-items-center">
+		<a href="{% url "catalog:product" product.slug %}">
+                	{% if product.image %}
+                    	<img src="{{ product.image.url }}" class="catalog-card-img custom-shadow" alt="{{ product.name }}">
+                	{% else %}
+                    	<img src="{% static "deps/images/Not found image.png" %}" class="catalog-card-img custom-shadow" alt="...">
+                	{% endif %}
+                	<div class="d-flex justify-content-between align-items-center mt-3">
+                        	<p class="card-title">
+                            		{% autoescape off %}
+                                	{% if product.headline %}
+                                	{{product.headline}}
+                                	{% else %}
+                                	{{ product.name }}
+                                	{% endif %}
+                            	{% endautoescape %}
+                        	</p>
+                    		<div class="d-flex justify-content-between align-items-center">
 
-                        {% if product.discount %}
-                            <p><s>{{product.price}}</s> ₽</p>
-                            <p><strong>{{ product.sell_price }} ₽</strong></p>
-<!--                            <span class="badge bg-warning text-dark">Скидка {{ product.discount }} %</span>-->
-                        {% else %}
-                            <p>{{ product.price }} ₽</p>
-                        {% endif %}
+                        		{% if product.discount %}
+                            			<p><s>{{product.price}}</s> ₽</p>
+                            			<p><strong>{{ product.sell_price }} ₽</strong></p>
+                        		{% else %}
+                            			<p>{{ product.price }} ₽</p>
+                        		{% endif %}
 
-                        <a href="{% url "cart:cart_add" %}" class="btn add-to-cart nav-shop"
-                        data-product-id="{{ product.id }}">
-                            {% csrf_token %}
-                        </a>
-                    </div>
-                </div>
+                       		 	<a href="{% url "cart:cart_add" %}" class="btn add-to-cart nav-shop"
+                        		data-product-id="{{ product.id }}">
+                            			{% csrf_token %}
+                        		</a>
+                    		</div>
+                	</div>
+		</a>
             </div>
     {% endfor %}
 </div>

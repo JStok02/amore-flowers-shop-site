@@ -36,10 +36,11 @@
             </div>
             <div class="input-group mb-3">
                  <span class="input-group-btn">
-                    <a href="{% url 'cart:cart_add' %}"
+                    <a href="{% url "cart:cart_add" %}"
                        class="btn-pink add-to-cart"
                        data-product-id="{{ product.id }}"
                        data-quantity-id="product-quantity-{{ product.id }}">
+                            {% csrf_token %}
                         Добавить в корзину
                     </a>
                 </span>
